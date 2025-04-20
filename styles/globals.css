@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.property-card-swiper {
+  .swiper-pagination-bullet-active {
+    background-color: #ffffff92 !important;
+  }
+
+  .swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
+    background-color: #fff !important;
+  }
+}
