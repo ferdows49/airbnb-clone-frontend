@@ -9,13 +9,16 @@ import Image2 from "../../public/images/image-2.jpg";
 import { FaStar } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+import { PropertyData } from "@/types/props/property/property";
 
 import "swiper/css";
 import "swiper/css/pagination";
 
-type PropertyCardPropsTypes = {};
+type PropertyCardPropsTypes = {
+  property: PropertyData;
+};
 
-const PropertyCard: FC<PropertyCardPropsTypes> = () => {
+const PropertyCard: FC<PropertyCardPropsTypes> = ({ property }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
@@ -56,23 +59,25 @@ const PropertyCard: FC<PropertyCardPropsTypes> = () => {
       <div className="flex flex-col gap-0.5">
         <div className="flex items-center justify-between mt-2">
           <p className="text-[15px] text-[#222222] font-medium leading-5">
-            Pokhara, Nepal
+            {property.city}
           </p>
           <div className="flex items-center gap-1">
             <FaStar className="text-[#222222] h-3 w-3" />
             <p className="text-[15px] text-[#222222] font-medium leading-5">
-              4.5
+              {property.rating}
             </p>
           </div>
         </div>
         <p className="text-[15px] text-[#6A6A6A] font-medium leading-5">
-          Phewa Lake
+          {property.title}
         </p>
-        <p className="text-[15px] text-[#6A6A6A] font-medium leading-5">
+        {/* <p className="text-[15px] text-[#6A6A6A] font-medium leading-5">
           Apr 27 - May 01
-        </p>
+        </p> */}
         <p className="text-[15px] font-medium leading-5">
-          <span className="text-[#222222] font-semibold underline">$1,000</span>{" "}
+          <span className="text-[#222222] font-semibold underline">
+            ${parseInt(property.price_per_night)}
+          </span>{" "}
           for 1 night
         </p>
       </div>

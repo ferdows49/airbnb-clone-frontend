@@ -1,0 +1,25 @@
+export type PropertyData = {
+  property_id: number;
+  host_id: number;
+  title: string;
+  description: string;
+  property_type: string;
+  room_type: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip_code: string;
+  latitude: string;
+  longitude: string;
+  num_bedrooms: number;
+  num_bathrooms: string;
+  max_guests: number;
+  price_per_night: string;
+  cleaning_fee: string;
+  service_fee: string;
+  created_at: string;
+  updated_at: string;
+  photos: any[];
+  rating: string;
+};
