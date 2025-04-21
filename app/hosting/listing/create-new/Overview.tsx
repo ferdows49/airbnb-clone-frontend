@@ -8,13 +8,13 @@ type OverviewPropsTypes = {};
 
 const Overview: FC<OverviewPropsTypes> = () => {
   return (
-    <div className="flex flex-col md:flex-row px-6 md:px-0">
+    <div className="flex flex-col md:flex-row px-6 md:px-0 pt-0 lg:pt-8">
       <div className="pe-0 md:pe-10 pt-0 md:pt-52">
         <h1 className="text-4xl md:text-5xl font-medium text-[#222222] max-w-[500px] font-airbnb pb-6">
           It’s easy to get started on Airbnb
         </h1>
       </div>
-      <div className="ps-0 lg:ps-40 pt-0 md:pt-6">
+      <div className="ps-0 lg:ps-56 pt-0 md:pt-6">
         <div className="flex gap-3 md:gap-4 pb-10 border-b-2 border-[#E5E5E5]">
           <div>
             <p className="text-lg md:text-2xl font-medium text-[#222222]">1</p>
