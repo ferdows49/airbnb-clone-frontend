@@ -24,11 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
+      {/* <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      > */}
+      <body className="font-airbnb antialiased">{children}</body>
     </html>
   );
 }
