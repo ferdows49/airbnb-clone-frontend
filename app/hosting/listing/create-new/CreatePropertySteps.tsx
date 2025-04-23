@@ -12,9 +12,10 @@ import RoomType from "./RoomType";
 import PropertyAddress from "./PropertyAddress";
 import PlaceBasicInfo from "./PlaceBasicInfo";
 import Amenities from "./Amenities";
+import PropertyPhotos from "./PropertyPhotos";
 
 const CreatePropertySteps: FC = () => {
-  const [steps, useSteps] = useState<number>(6);
+  const [steps, useSteps] = useState<number>(7);
 
   return (
     <div className="relative h-screen flex flex-col">
@@ -38,6 +39,7 @@ const CreatePropertySteps: FC = () => {
         {steps === 4 && <PropertyAddress />}
         {steps === 5 && <PlaceBasicInfo />}
         {steps === 6 && <Amenities />}
+        {steps === 7 && <PropertyPhotos />}
       </div>
       <div className="absolute left-0 right-0 bottom-0 z-10 bg-white">
         <Progress value={(steps / 12) * 100} className="" />
