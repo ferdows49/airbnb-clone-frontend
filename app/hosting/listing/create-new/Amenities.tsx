@@ -23,6 +23,7 @@ import { FaShower } from "react-icons/fa6";
 import { MdSmokeFree, MdLocalFireDepartment } from "react-icons/md";
 import { FaKitMedical, FaFireExtinguisher } from "react-icons/fa6";
 import { RiAlarmWarningLine } from "react-icons/ri";
+import AminityCard from "./AmenityCard";
 
 const guestFavoriteAmenities = [
   { label: "Wifi", icon: <FaWifi size={24} /> },
@@ -63,32 +64,38 @@ type Props = {};
 
 const Amenities = (props: Props) => {
   const [selectedGuestFavorite, setSelectedGuestFavorite] = useState<
-    string | null
+    string[] | null
   >(null);
-  const [selectedStandout, setSelectedStandout] = useState<string | null>(null);
-  const [selectedSafety, setSelectedSafety] = useState<string | null>(null);
+  const [selectedStandout, setSelectedStandout] = useState<string[] | null>(
+    null
+  );
+  const [selectedSafety, setSelectedSafety] = useState<string[] | null>(null);
 
-  const handleGuestFavoriteSelect = (type: string) => {
-    if (selectedGuestFavorite === type) {
-      setSelectedGuestFavorite(null);
-    } else {
-      setSelectedGuestFavorite(type);
-    }
-  };
-
-  const handleStandoutSelect = (type: string) => {
-    if (selectedStandout === type) {
-      setSelectedStandout(null);
-    } else {
-      setSelectedStandout(type);
-    }
-  };
-
-  const handleSafetySelect = (type: string) => {
-    if (selectedSafety === type) {
-      setSelectedSafety(null);
-    } else {
-      setSelectedSafety(type);
+  const handleSelect = (label: string) => {
+    if (guestFavoriteAmenities.find((item) => item.label === label)) {
+      if (selectedGuestFavorite?.includes(label)) {
+        setSelectedGuestFavorite(
+          (prev) => prev?.filter((item) => item !== label) || null
+        );
+      } else {
+        setSelectedGuestFavorite((prev) => (prev ? [...prev, label] : [label]));
+      }
+    } else if (standoutAmenities.find((item) => item.label === label)) {
+      if (selectedStandout?.includes(label)) {
+        setSelectedStandout(
+          (prev) => prev?.filter((item) => item !== label) || null
+        );
+      } else {
+        setSelectedStandout((prev) => (prev ? [...prev, label] : [label]));
+      }
+    } else if (safetyAmenities.find((item) => item.label === label)) {
+      if (selectedSafety?.includes(label)) {
+        setSelectedSafety(
+          (prev) => prev?.filter((item) => item !== label) || null
+        );
+      } else {
+        setSelectedSafety((prev) => (prev ? [...prev, label] : [label]));
+      }
     }
   };
 
@@ -100,102 +107,27 @@ const Amenities = (props: Props) => {
       <p className="text-base md:text-lg font-normal text-[#6A6A6A] mb-6 md:mb-8">
         You can add more amenities after you publish your listing.
       </p>
-      <div className="flex flex-col gap-2 mb-6 md:mb-8">
-        <p className="text-lg font-medium text-[#222222] mb-3">
-          What about these guest favorites?
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {standoutAmenities.map((type) => {
-            const isSelected = selectedGuestFavorite === type.label;
-            return (
-              <div
-                key={type.label}
-                onClick={() => handleGuestFavoriteSelect(type.label)}
-                className={`p-4 border rounded-md flex flex-col gap-1 cursor-pointer transition ${
-                  isSelected
-                    ? "border-primary bg-primary/10"
-                    : "border-gray-300 hover:shadow-md"
-                }`}
-              >
-                <div
-                  className={`${
-                    isSelected ? "text-primary" : "text-gray-700"
-                  } transition`}
-                >
-                  {type.icon}
-                </div>
-                <span className="text-sm font-medium text-gray-800">
-                  {type.label}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="flex flex-col gap-2 mb-6 md:mb-8">
-        <p className="text-lg font-medium text-[#222222] mb-3">
-          Do you have any standout amenities?
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {standoutAmenities.map((type) => {
-            const isSelected = selectedStandout === type.label;
-            return (
-              <div
-                key={type.label}
-                onClick={() => handleStandoutSelect(type.label)}
-                className={`p-4 border rounded-md flex flex-col gap-1 cursor-pointer transition ${
-                  isSelected
-                    ? "border-primary bg-primary/10"
-                    : "border-gray-300 hover:shadow-md"
-                }`}
-              >
-                <div
-                  className={`${
-                    isSelected ? "text-primary" : "text-gray-700"
-                  } transition`}
-                >
-                  {type.icon}
-                </div>
-                <span className="text-sm font-medium text-gray-800">
-                  {type.label}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="flex flex-col gap-2 mb-6 md:mb-8">
-        <p className="text-lg font-medium text-[#222222] mb-3">
-          Do you have any of these safety items?
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {safetyAmenities.map((type) => {
-            const isSelected = selectedSafety === type.label;
-            return (
-              <div
-                key={type.label}
-                onClick={() => handleSafetySelect(type.label)}
-                className={`p-4 border rounded-md flex flex-col gap-1 cursor-pointer transition ${
-                  isSelected
-                    ? "border-primary bg-primary/10"
-                    : "border-gray-300 hover:shadow-md"
-                }`}
-              >
-                <div
-                  className={`${
-                    isSelected ? "text-primary" : "text-gray-700"
-                  } transition`}
-                >
-                  {type.icon}
-                </div>
-                <span className="text-sm font-medium text-gray-800">
-                  {type.label}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+
+      <AminityCard
+        title="What about these guest favorites?"
+        amenities={guestFavoriteAmenities}
+        selectedAmenities={selectedGuestFavorite}
+        handleSelect={handleSelect}
+      />
+
+      <AminityCard
+        title="Do you have any standout amenities?"
+        amenities={standoutAmenities}
+        selectedAmenities={selectedStandout}
+        handleSelect={handleSelect}
+      />
+
+      <AminityCard
+        title="Do you have any of these safety items?"
+        amenities={safetyAmenities}
+        selectedAmenities={selectedSafety}
+        handleSelect={handleSelect}
+      />
     </div>
   );
 };
