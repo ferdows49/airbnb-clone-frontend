@@ -6,7 +6,7 @@ type AmenityCardPropsTypes = {
     label: string;
     icon: React.ReactNode;
   }[];
-  selectedAmenities: string[] | null;
+  selectedAmenities: string[];
   handleSelect: (label: string) => void;
 };
 

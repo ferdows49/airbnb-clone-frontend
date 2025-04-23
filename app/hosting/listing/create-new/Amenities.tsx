@@ -23,7 +23,7 @@ import { FaShower } from "react-icons/fa6";
 import { MdSmokeFree, MdLocalFireDepartment } from "react-icons/md";
 import { FaKitMedical, FaFireExtinguisher } from "react-icons/fa6";
 import { RiAlarmWarningLine } from "react-icons/ri";
-import AminityCard from "./AmenityCard";
+import AmenityCard from "./AmenityCard";
 
 const guestFavoriteAmenities = [
   { label: "Wifi", icon: <FaWifi size={24} /> },
@@ -63,39 +63,31 @@ const safetyAmenities = [
 type Props = {};
 
 const Amenities = (props: Props) => {
-  const [selectedGuestFavorite, setSelectedGuestFavorite] = useState<
-    string[] | null
-  >(null);
-  const [selectedStandout, setSelectedStandout] = useState<string[] | null>(
-    null
+  const [selectedGuestFavorite, setSelectedGuestFavorite] = useState<string[]>(
+    []
   );
-  const [selectedSafety, setSelectedSafety] = useState<string[] | null>(null);
+  const [selectedStandout, setSelectedStandout] = useState<string[]>([]);
+  const [selectedSafety, setSelectedSafety] = useState<string[]>([]);
+
+  const toggleSelection = (
+    label: string,
+    selected: string[],
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    if (selected.includes(label)) {
+      setSelected(selected.filter((item) => item !== label));
+    } else {
+      setSelected([...selected, label]);
+    }
+  };
 
   const handleSelect = (label: string) => {
-    if (guestFavoriteAmenities.find((item) => item.label === label)) {
-      if (selectedGuestFavorite?.includes(label)) {
-        setSelectedGuestFavorite(
-          (prev) => prev?.filter((item) => item !== label) || null
-        );
-      } else {
-        setSelectedGuestFavorite((prev) => (prev ? [...prev, label] : [label]));
-      }
-    } else if (standoutAmenities.find((item) => item.label === label)) {
-      if (selectedStandout?.includes(label)) {
-        setSelectedStandout(
-          (prev) => prev?.filter((item) => item !== label) || null
-        );
-      } else {
-        setSelectedStandout((prev) => (prev ? [...prev, label] : [label]));
-      }
-    } else if (safetyAmenities.find((item) => item.label === label)) {
-      if (selectedSafety?.includes(label)) {
-        setSelectedSafety(
-          (prev) => prev?.filter((item) => item !== label) || null
-        );
-      } else {
-        setSelectedSafety((prev) => (prev ? [...prev, label] : [label]));
-      }
+    if (guestFavoriteAmenities.some((item) => item.label === label)) {
+      toggleSelection(label, selectedGuestFavorite, setSelectedGuestFavorite);
+    } else if (standoutAmenities.some((item) => item.label === label)) {
+      toggleSelection(label, selectedStandout, setSelectedStandout);
+    } else if (safetyAmenities.some((item) => item.label === label)) {
+      toggleSelection(label, selectedSafety, setSelectedSafety);
     }
   };
 
@@ -108,21 +100,21 @@ const Amenities = (props: Props) => {
         You can add more amenities after you publish your listing.
       </p>
 
-      <AminityCard
+      <AmenityCard
         title="What about these guest favorites?"
         amenities={guestFavoriteAmenities}
         selectedAmenities={selectedGuestFavorite}
         handleSelect={handleSelect}
       />
 
-      <AminityCard
+      <AmenityCard
         title="Do you have any standout amenities?"
         amenities={standoutAmenities}
         selectedAmenities={selectedStandout}
         handleSelect={handleSelect}
       />
 
-      <AminityCard
+      <AmenityCard
         title="Do you have any of these safety items?"
         amenities={safetyAmenities}
         selectedAmenities={selectedSafety}
