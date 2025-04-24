@@ -18,7 +18,7 @@ import PropertyDescription from "./PropertyDescription";
 import PriceInput from "./PriceInput";
 
 const CreatePropertySteps: FC = () => {
-  const [steps, useSteps] = useState<number>(10);
+  const [steps, useSteps] = useState<number>(0);
 
   return (
     <div className="relative h-screen flex flex-col">
@@ -27,11 +27,11 @@ const CreatePropertySteps: FC = () => {
           <Link href="/">
             <FaAirbnb size={40} />
           </Link>
-          <Link href="/">
+          {/* <Link href="/">
             <Button className="cursor-pointer" variant={"outline"}>
               {steps > 0 ? "save & exit" : "exit"}
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="flex-1 flex justify-center items-start px-0 md:px-8 h-auto overflow-auto">
@@ -48,8 +48,19 @@ const CreatePropertySteps: FC = () => {
         {steps === 10 && <PriceInput />}
       </div>
       <div className="absolute left-0 right-0 bottom-0 z-10 bg-white">
-        <Progress value={(steps / 12) * 100} className="" />
-        <div className="px-6 md:px-8 lg:px-12 2xl:px-20 py-5 text-end">
+        <Progress value={(steps / 11) * 100} className="" />
+        <div className="px-6 md:px-8 lg:px-12 2xl:px-20 py-5 text-end flex items-center justify-between">
+          {steps > 0 ? (
+            <Button
+              onClick={() => useSteps(steps - 1)}
+              className="cursor-pointer bg-pink-600"
+              size={"lg"}
+            >
+              Back
+            </Button>
+          ) : (
+            <div></div>
+          )}
           <Button
             onClick={() => useSteps(steps + 1)}
             className="cursor-pointer bg-pink-600"
