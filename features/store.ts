@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./apiSlice";
+import createPropertyReducer from "./property/create-property/createPropertySlice";
 
 export const store = configureStore({
   reducer: {
+    createProperty: createPropertyReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
