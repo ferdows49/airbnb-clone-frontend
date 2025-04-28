@@ -1,10 +1,13 @@
-import { Textarea } from "@/components/ui/textarea";
 import React from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { setDescription } from "@/features/property/create-property/createPropertySlice";
+import { useDispatch, useSelector } from "react-redux";
 
-type Props = {};
-
-const PropertyDescription = (props: Props) => {
-  const [description, setDescription] = React.useState<string | null>(null);
+const PropertyDescription = () => {
+  const dispatch = useDispatch();
+  const description = useSelector(
+    (state: any) => state.createProperty.description
+  );
 
   return (
     <div className="px-6 md:px-0 mb-48 mt-0 md:mt-12 w-full md:w-auto">
@@ -17,7 +20,7 @@ const PropertyDescription = (props: Props) => {
       <Textarea
         onChange={(e) => {
           if (e.target.value.length <= 500) {
-            setDescription(e.target.value);
+            dispatch(setDescription(e.target.value));
           }
         }}
         value={description || ""}

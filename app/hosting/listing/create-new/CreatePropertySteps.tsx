@@ -16,9 +16,16 @@ import PropertyPhotos from "./PropertyPhotos";
 import PropertyTitle from "./PropertyTitle";
 import PropertyDescription from "./PropertyDescription";
 import PriceInput from "./PriceInput";
+import { useDispatch, useSelector } from "react-redux";
+import { setPropertyCreateStep } from "@/features/property/create-property/createPropertySlice";
 
 const CreatePropertySteps: FC = () => {
-  const [steps, useSteps] = useState<number>(0);
+  const dispatch = useDispatch();
+
+  const steps = useSelector((state: any) => state.createProperty.step);
+  const propertyType = useSelector((state: any) => state.createProperty);
+
+  console.log("propertyType", propertyType);
 
   return (
     <div className="relative h-screen flex flex-col">
@@ -52,7 +59,7 @@ const CreatePropertySteps: FC = () => {
         <div className="px-6 md:px-8 lg:px-12 2xl:px-20 py-5 text-end flex items-center justify-between">
           {steps > 0 ? (
             <Button
-              onClick={() => useSteps(steps - 1)}
+              onClick={() => dispatch(setPropertyCreateStep(steps - 1))}
               className="cursor-pointer bg-pink-600"
               size={"lg"}
             >
@@ -62,7 +69,7 @@ const CreatePropertySteps: FC = () => {
             <div></div>
           )}
           <Button
-            onClick={() => useSteps(steps + 1)}
+            onClick={() => dispatch(setPropertyCreateStep(steps + 1))}
             className="cursor-pointer bg-pink-600"
             size={"lg"}
           >

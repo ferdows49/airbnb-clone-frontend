@@ -1,14 +1,14 @@
+import { setBasicInfo } from "@/features/property/create-property/createPropertySlice";
 import React, { useState } from "react";
 import { PiMinusCircleThin } from "react-icons/pi";
 import { PiPlusCircleThin } from "react-icons/pi";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
 
 const PlaceBasicInfo = (props: Props) => {
-  const [guests, setGuests] = useState(1);
-  const [beds, setBeds] = useState(1);
-  const [baths, setBaths] = useState(1);
-  const [bedrooms, setBedrooms] = useState(0);
+  const dispatch = useDispatch();
+  const basicInfo = useSelector((state: any) => state.createProperty.basicInfo);  
 
   return (
     <div className="px-6 md:px-0 mb-48 mt-0 md:mt-20">
@@ -27,25 +27,33 @@ const PlaceBasicInfo = (props: Props) => {
             <PiMinusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                guests === 1 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.guests === 1
+                  ? "text-gray-300 hover:text-gray-300"
+                  : ""
               }`}
               onClick={() => {
-                if (guests > 1 && guests <= 20) {
-                  setGuests((prev) => prev - 1);
+                if (basicInfo.guests > 1 && basicInfo.guests <= 20) {
+                  dispatch(
+                    setBasicInfo({ ...basicInfo, guests: basicInfo.guests - 1 })
+                  );
                 }
               }}
             />
             <p className="text-xl font-normal text-[#222222] min-w-6 text-center">
-              {guests}
+              {basicInfo.guests}
             </p>
             <PiPlusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                guests === 20 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.guests === 20
+                  ? "text-gray-300 hover:text-gray-300"
+                  : ""
               }`}
               onClick={() => {
-                if (guests >= 1 && guests < 20) {
-                  setGuests((prev) => prev + 1);
+                if (basicInfo.guests >= 1 && basicInfo.guests < 20) {
+                  dispatch(
+                    setBasicInfo({ ...basicInfo, guests: basicInfo.guests + 1 })
+                  );
                 }
               }}
             />
@@ -59,25 +67,39 @@ const PlaceBasicInfo = (props: Props) => {
             <PiMinusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                bedrooms === 0 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.bedrooms === 0
+                  ? "text-gray-300 hover:text-gray-300"
+                  : ""
               }`}
               onClick={() => {
-                if (bedrooms > 0 && bedrooms <= 20) {
-                  setBedrooms((prev) => prev - 1);
+                if (basicInfo.bedrooms > 0 && basicInfo.bedrooms <= 20) {
+                  dispatch(
+                    setBasicInfo({
+                      ...basicInfo,
+                      bedrooms: basicInfo.bedrooms - 1,
+                    })
+                  );
                 }
               }}
             />
             <p className="text-xl font-normal text-[#222222] min-w-6 text-center">
-              {bedrooms}
+              {basicInfo.bedrooms}
             </p>
             <PiPlusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                bedrooms === 20 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.bedrooms === 20
+                  ? "text-gray-300 hover:text-gray-300"
+                  : ""
               }`}
               onClick={() => {
-                if (bedrooms >= 0 && bedrooms < 20) {
-                  setBedrooms((prev) => prev + 1);
+                if (basicInfo.bedrooms >= 0 && basicInfo.bedrooms < 20) {
+                  dispatch(
+                    setBasicInfo({
+                      ...basicInfo,
+                      bedrooms: basicInfo.bedrooms + 1,
+                    })
+                  );
                 }
               }}
             />
@@ -89,25 +111,29 @@ const PlaceBasicInfo = (props: Props) => {
             <PiMinusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                beds === 1 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.beds === 1 ? "text-gray-300 hover:text-gray-300" : ""
               }`}
               onClick={() => {
-                if (beds > 1 && beds <= 20) {
-                  setBeds((prev) => prev - 1);
+                if (basicInfo.beds > 1 && basicInfo.beds <= 20) {
+                  dispatch(
+                    setBasicInfo({ ...basicInfo, beds: basicInfo.beds - 1 })
+                  );
                 }
               }}
             />
             <p className="text-xl font-normal text-[#222222] min-w-6 text-center">
-              {beds}
+              {basicInfo.beds}
             </p>
             <PiPlusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                beds === 20 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.beds === 20 ? "text-gray-300 hover:text-gray-300" : ""
               }`}
               onClick={() => {
-                if (beds >= 1 && beds < 20) {
-                  setBeds((prev) => prev + 1);
+                if (basicInfo.beds >= 1 && basicInfo.beds < 20) {
+                  dispatch(
+                    setBasicInfo({ ...basicInfo, beds: basicInfo.beds + 1 })
+                  );
                 }
               }}
             />
@@ -122,25 +148,31 @@ const PlaceBasicInfo = (props: Props) => {
             <PiMinusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                baths === 1 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.baths === 1 ? "text-gray-300 hover:text-gray-300" : ""
               }`}
               onClick={() => {
-                if (baths > 1 && baths <= 20) {
-                  setBaths((prev) => prev - 1);
+                if (basicInfo.baths > 1 && basicInfo.baths <= 20) {
+                  dispatch(
+                    setBasicInfo({ ...basicInfo, baths: basicInfo.baths - 1 })
+                  );
                 }
               }}
             />
             <p className="text-xl font-normal text-[#222222] min-w-6 text-center">
-              {baths}
+              {basicInfo.baths}
             </p>
             <PiPlusCircleThin
               size={35}
               className={`text-3xl md:text-4xl text-[#6A6A6A] hover:text-black cursor-pointer ${
-                baths === 20 ? "text-gray-300 hover:text-gray-300" : ""
+                basicInfo.baths === 20
+                  ? "text-gray-300 hover:text-gray-300"
+                  : ""
               }`}
               onClick={() => {
-                if (baths >= 1 && baths < 20) {
-                  setBaths((prev) => prev + 1);
+                if (basicInfo.baths >= 1 && basicInfo.baths < 20) {
+                  dispatch(
+                    setBasicInfo({ ...basicInfo, baths: basicInfo.baths + 1 })
+                  );
                 }
               }}
             />

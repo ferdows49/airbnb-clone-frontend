@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { LiaDollarSignSolid } from "react-icons/lia";
+import { useDispatch, useSelector } from "react-redux";
+import { setPrice } from "@/features/property/create-property/createPropertySlice";
 
 type Props = {};
 
 const PriceInput = (props: Props) => {
-  const [price, setPrice] = useState<string>("");
+  const dispatch = useDispatch();
+  const price = useSelector((state: any) => state.createProperty.price);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (/^\d{0,6}$/.test(value)) {
       const cleanedValue = value.replace(/^0+(?!$)/, "");
-      setPrice(cleanedValue);
+      dispatch(setPrice(Number(cleanedValue)));
     }
   };
 

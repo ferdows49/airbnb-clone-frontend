@@ -24,6 +24,8 @@ import { MdSmokeFree, MdLocalFireDepartment } from "react-icons/md";
 import { FaKitMedical, FaFireExtinguisher } from "react-icons/fa6";
 import { RiAlarmWarningLine } from "react-icons/ri";
 import AmenityCard from "./AmenityCard";
+import { useDispatch, useSelector } from "react-redux";
+import { setAmenities } from "@/features/property/create-property/createPropertySlice";
 
 const guestFavoriteAmenities = [
   { label: "Wifi", icon: <FaWifi size={24} /> },
@@ -63,31 +65,60 @@ const safetyAmenities = [
 type Props = {};
 
 const Amenities = (props: Props) => {
-  const [selectedGuestFavorite, setSelectedGuestFavorite] = useState<string[]>(
-    []
-  );
-  const [selectedStandout, setSelectedStandout] = useState<string[]>([]);
-  const [selectedSafety, setSelectedSafety] = useState<string[]>([]);
-
-  const toggleSelection = (
-    label: string,
-    selected: string[],
-    setSelected: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    if (selected.includes(label)) {
-      setSelected(selected.filter((item) => item !== label));
-    } else {
-      setSelected([...selected, label]);
-    }
-  };
+  const dispatch = useDispatch();
+  const amenities = useSelector((state: any) => state.createProperty.amenities);
 
   const handleSelect = (label: string) => {
     if (guestFavoriteAmenities.some((item) => item.label === label)) {
-      toggleSelection(label, selectedGuestFavorite, setSelectedGuestFavorite);
+      if (amenities.guestFavorite.includes(label)) {
+        dispatch(
+          setAmenities({
+            ...amenities,
+            guestFavorite: amenities.guestFavorite.filter(
+              (item: any) => item !== label
+            ),
+          })
+        );
+      } else {
+        dispatch(
+          setAmenities({
+            ...amenities,
+            guestFavorite: [...amenities.guestFavorite, label],
+          })
+        );
+      }
     } else if (standoutAmenities.some((item) => item.label === label)) {
-      toggleSelection(label, selectedStandout, setSelectedStandout);
+      if (amenities.standout.includes(label)) {
+        dispatch(
+          setAmenities({
+            ...amenities,
+            standout: amenities.standout.filter((item: any) => item !== label),
+          })
+        );
+      } else {
+        dispatch(
+          setAmenities({
+            ...amenities,
+            standout: [...amenities.standout, label],
+          })
+        );
+      }
     } else if (safetyAmenities.some((item) => item.label === label)) {
-      toggleSelection(label, selectedSafety, setSelectedSafety);
+      if (amenities.safety.includes(label)) {
+        dispatch(
+          setAmenities({
+            ...amenities,
+            safety: amenities.safety.filter((item: any) => item !== label),
+          })
+        );
+      } else {
+        dispatch(
+          setAmenities({
+            ...amenities,
+            safety: [...amenities.safety, label],
+          })
+        );
+      }
     }
   };
 
@@ -103,21 +134,21 @@ const Amenities = (props: Props) => {
       <AmenityCard
         title="What about these guest favorites?"
         amenities={guestFavoriteAmenities}
-        selectedAmenities={selectedGuestFavorite}
+        selectedAmenities={amenities.guestFavorite}
         handleSelect={handleSelect}
       />
 
       <AmenityCard
         title="Do you have any standout amenities?"
         amenities={standoutAmenities}
-        selectedAmenities={selectedStandout}
+        selectedAmenities={amenities.standout}
         handleSelect={handleSelect}
       />
 
       <AmenityCard
         title="Do you have any of these safety items?"
         amenities={safetyAmenities}
-        selectedAmenities={selectedSafety}
+        selectedAmenities={amenities.safety}
         handleSelect={handleSelect}
       />
     </div>
