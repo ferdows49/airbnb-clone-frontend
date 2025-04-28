@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import { BsHouseDoor } from "react-icons/bs";
 import {
   PiBuildingApartment,
@@ -20,7 +20,8 @@ import { FaRegBuilding, FaLandmarkDome } from "react-icons/fa6";
 import { GiMountainCave } from "react-icons/gi";
 import { LuHotel } from "react-icons/lu";
 import { HiOutlineHomeModern } from "react-icons/hi2";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setPropertyType } from "@/features/property/create-property/createPropertySlice";
 
 const propertyTypeOptions = [
   { label: "House", icon: <BsHouseDoor size={24} /> },
@@ -47,13 +48,18 @@ const propertyTypeOptions = [
   { label: "Windmill", icon: <TbBuildingEstate size={24} /> },
 ];
 
-type Props = {};
-
-const PropertyType = (props: Props) => {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+const PropertyType: FC = () => {
+  const dispatch = useDispatch();
+  const propertyType = useSelector(
+    (state: any) => state.createProperty.propertyType
+  );
 
   const handleSelect = (label: string) => {
-    setSelectedType((prev) => (prev === label ? null : label));
+    if (label === propertyType) {
+      dispatch(setPropertyType(null));
+    } else {
+      dispatch(setPropertyType(label));
+    }
   };
 
   return (
@@ -63,7 +69,7 @@ const PropertyType = (props: Props) => {
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {propertyTypeOptions.map((type) => {
-          const isSelected = selectedType === type.label;
+          const isSelected = propertyType === type.label;
           return (
             <div
               key={type.label}

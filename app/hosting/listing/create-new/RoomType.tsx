@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import { HiOutlineHome } from "react-icons/hi";
 import { PiDoorOpen } from "react-icons/pi";
 import { FaUsersRectangle } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { setRoomType } from "@/features/property/create-property/createPropertySlice";
 
-type Props = {};
-
-const RoomType = (props: Props) => {
-  const [selectedRoomType, setSelectedRoomType] = useState<string | null>(null);
-  console.log("selectedRoomType", selectedRoomType);
+const RoomType: FC = () => {
+  const dispatch = useDispatch();
+  const roomType: any = useSelector(
+    (state: any) => state?.createProperty?.roomType
+  );
 
   const handleSelect = (label: string) => {
-    setSelectedRoomType((prev) => (prev === label ? null : label));
+    if (roomType === label) {
+      dispatch(setRoomType(null));
+    } else {
+      dispatch(setRoomType(label));
+    }
   };
 
   return (
@@ -21,9 +27,9 @@ const RoomType = (props: Props) => {
       <div className="flex flex-col gap-4">
         <div
           className={`p-6 border-2 border-gray-400 hover:border-black cursor-pointer rounded-2xl flex justify-between gap-6 ${
-            selectedRoomType === "entire-place" ? "!border-black bg-gray-100" : ""
+            roomType === "Entire Place" ? "!border-black bg-gray-100" : ""
           }`}
-          onClick={() => handleSelect("entire-place")}
+          onClick={() => handleSelect("Entire Place")}
         >
           <div className="max-w-[520px]">
             <h4 className="text-lg md:text-2xl font-medium text-[#222222]">
@@ -39,9 +45,9 @@ const RoomType = (props: Props) => {
         </div>
         <div
           className={`p-6 border-2 border-gray-400 hover:border-black cursor-pointer rounded-2xl flex justify-between gap-6 ${
-            selectedRoomType === "a-room" ? "!border-black bg-gray-100" : ""
+            roomType === "Private Room" ? "!border-black bg-gray-100" : ""
           }`}
-          onClick={() => handleSelect("a-room")}
+          onClick={() => handleSelect("Private Room")}
         >
           <div className="max-w-[520px]">
             <h4 className="text-lg md:text-2xl font-medium text-[#222222]">
@@ -58,9 +64,9 @@ const RoomType = (props: Props) => {
         </div>
         <div
           className={`p-6 border-2 border-gray-400 hover:border-black cursor-pointer rounded-2xl flex justify-between gap-6 ${
-            selectedRoomType === "shared-room" ? "!border-black bg-gray-100" : ""
+            roomType === "Shared Room" ? "!border-black bg-gray-100" : ""
           }`}
-          onClick={() => handleSelect("shared-room")}
+          onClick={() => handleSelect("Shared Room")}
         >
           <div className="max-w-[520px]">
             <h4 className="text-lg md:text-2xl font-medium text-[#222222]">

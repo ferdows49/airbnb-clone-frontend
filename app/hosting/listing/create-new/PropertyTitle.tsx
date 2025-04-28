@@ -1,10 +1,11 @@
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import { setTitle } from "@/features/property/create-property/createPropertySlice";
+import React, { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-type Props = {};
-
-const PropertyTitle = (props: Props) => {
-  const [title, setTitle] = useState<string | null>(null);
+const PropertyTitle: FC = () => {
+  const dispatch = useDispatch();
+  const title = useSelector((state: any) => state.createProperty.title);
 
   return (
     <div className="px-6 md:px-0 mb-48 mt-0 md:mt-12">
@@ -18,7 +19,7 @@ const PropertyTitle = (props: Props) => {
         type="text"
         onChange={(e) => {
           if (e.target.value.length <= 32) {
-            setTitle(e.target.value);
+            dispatch(setTitle(e.target.value));
           }
         }}
         value={title || ""}

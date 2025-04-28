@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { FiUpload } from "react-icons/fi";
 import { Input } from "@/components/ui/input";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { setPhotos } from "@/features/property/create-property/createPropertySlice";
 
 type Props = {};
 
 const PropertyPhotos = (props: Props) => {
-  const [photos, setPhotos] = useState<File[]>([]);
+  const dispatch = useDispatch();
+  const photos = useSelector((state: any) => state.createProperty.photos);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
-      setPhotos((prev) => [...prev, ...selectedFiles]);
+      dispatch(setPhotos([...photos, ...selectedFiles]));
     }
   };
 
@@ -25,7 +28,7 @@ const PropertyPhotos = (props: Props) => {
         later.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        {photos.map((photo, index) => (
+        {photos?.map((photo: any, index: any) => (
           <div
             key={index}
             className="h-48 w-auto sm:w-48 rounded-xl overflow-hidden border border-gray-200 relative"
@@ -38,7 +41,9 @@ const PropertyPhotos = (props: Props) => {
             <div
               className="absolute inline-block top-2 right-2 cursor-pointer"
               onClick={() =>
-                setPhotos(photos.filter((item) => item.name !== photo.name))
+                dispatch(
+                  setPhotos(photos.filter((_: any, i: number) => i !== index))
+                )
               }
             >
               <IoIosCloseCircleOutline size={24} />
