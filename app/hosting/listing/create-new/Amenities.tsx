@@ -33,7 +33,7 @@ const guestFavoriteAmenities = [
   { label: "Kitchen", icon: <PiOven size={24} /> },
   { label: "Washer", icon: <BiSolidWasher size={24} /> },
   { label: "Free parking on premises", icon: <LuCarFront size={24} /> },
-  { label: "Paid parking on permits", icon: <LuParkingMeter size={24} /> },
+  { label: "Paid parking on premises", icon: <LuParkingMeter size={24} /> },
   { label: "Air conditioning", icon: <IoSnowSharp size={24} /> },
   { label: "Dedicated workspace", icon: <BsPersonWorkspace size={24} /> },
 ];
@@ -56,7 +56,7 @@ const standoutAmenities = [
 ];
 
 const safetyAmenities = [
-  { label: "Smoke alarm", icon: <MdSmokeFree size={24} /> },
+  { label: "Smoke alarm", icon: <RiAlarmWarningLine size={24} /> },
   { label: "First aid kit", icon: <FaKitMedical size={24} /> },
   { label: "Fire extinguisher", icon: <FaFireExtinguisher size={24} /> },
   { label: "Carbon monoxide alarm", icon: <RiAlarmWarningLine size={24} /> },

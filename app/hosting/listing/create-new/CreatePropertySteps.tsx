@@ -1,9 +1,9 @@
 "use client";
 
+import React, { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-import React, { FC, useState } from "react";
 import { FaAirbnb } from "react-icons/fa";
 import Overview from "./Overview";
 import AboutPlace from "./AboutPlace";
@@ -18,14 +18,54 @@ import PropertyDescription from "./PropertyDescription";
 import PriceInput from "./PriceInput";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertyCreateStep } from "@/features/property/create-property/createPropertySlice";
+import { useCreatePropertyMutation } from "@/features/property/create-property/createPropertyApiSlice";
 
 const CreatePropertySteps: FC = () => {
   const dispatch = useDispatch();
 
   const steps = useSelector((state: any) => state.createProperty.step);
-  const propertyType = useSelector((state: any) => state.createProperty);
+  const propertyData = useSelector((state: any) => state.createProperty);
+  console.log("propertyData", propertyData);
 
-  console.log("propertyType", propertyType);
+  const [createProperty] = useCreatePropertyMutation();
+
+  const handleSubmit = async () => {
+    const payload = {
+      host_id: 1,
+      title: propertyData.title,
+      description: propertyData.description,
+      property_type: propertyData.propertyType,
+      room_type: propertyData.roomType,
+      address: propertyData.propertyAddress.street,
+      city: propertyData.propertyAddress.city,
+      state: propertyData.propertyAddress.state || "",
+      country: propertyData.propertyAddress.country,
+      zip_code: propertyData.propertyAddress.postalCode || "",
+      latitude: undefined,
+      longitude: undefined,
+      num_bedrooms: propertyData.basicInfo.bedrooms,
+      num_bathrooms: propertyData.basicInfo.baths,
+      max_guests: propertyData.basicInfo.guests,
+      num_beds: propertyData.basicInfo.beds,
+      guest_favorite_amenities: propertyData.amenities.guestFavorite,
+      standout_amenities: propertyData.amenities.standout,
+      safety_amenities: propertyData.amenities.safety,
+      price_per_night: propertyData.price,
+      cleaning_fee: 0,
+      service_fee: 0,
+    };
+
+    console.log("payload", payload);
+    
+
+    try {
+      const response = await createProperty(payload).unwrap();
+      console.log("Property created successfully:", response);
+      // You can redirect or reset form here
+    } catch (error) {
+      console.error("Failed to create property:", error);
+    }
+  };
 
   return (
     <div className="relative h-screen flex flex-col">
@@ -69,11 +109,17 @@ const CreatePropertySteps: FC = () => {
             <div></div>
           )}
           <Button
-            onClick={() => dispatch(setPropertyCreateStep(steps + 1))}
+            onClick={() => {
+              if (steps === 10) {
+                handleSubmit();
+              } else {
+                dispatch(setPropertyCreateStep(steps + 1));
+              }
+            }}
             className="cursor-pointer bg-pink-600"
             size={"lg"}
           >
-            {steps === 0 ? "Get Started" : "Next"}
+            {steps === 0 ? "Get Started" : steps === 10 ? "Finish" : "Next"}
           </Button>
         </div>
       </div>
